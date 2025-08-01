@@ -38,7 +38,8 @@ const page = async () => {
   return (
     <main className="min-h-dvh p-3 z-20">
       <section className="">
-        <div className="h-[30vh] bg-[url('/beautifulworld.jpg')] bg-no-repeat bg-center bg-cover relative">
+        <div className="h-[30vh] bg-[url('/beautifulworld.jpg')] bg-no-repeat bg-center bg-cover relative max-md:flex
+        items-center justify-center">
           <img
             src={session?.user?.image}
             alt={session?.user?.name.slice(0, 1).toUpperCase()}
