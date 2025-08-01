@@ -5,9 +5,24 @@ import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { IoMdMenu } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
+import { useSession, signOut } from "next-auth/react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const Nav = () => {
   const [navOpen, setNavOpen] = useState(false);
+  const { data: session, status } = useSession();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  console.log(session, status);
 
   // handler function for nav open
   const handleOpen = () => {
@@ -20,13 +35,11 @@ const Nav = () => {
     { url: "/", label: "Home" },
     { url: "/category", label: "Category" },
     { url: "/about", label: "About Us" },
-    { url: "/faqs", label: "FAQs" },
-    
   ];
 
   return (
-    <nav className="flex items-center justify-between shadow-md py-3 px-6 relative">
-      <Link href={"/"} className="flex items-center gap-1 z-50">
+    <nav className="bg-green-700 flex items-center justify-between shadow-md py-3 px-6 relative rounded-b-xl z-50">
+      <Link href={"/"} className="flex items-center gap-1 lg:ml-10 z-50">
         <Image
           src={"/logo.png"}
           alt="logo"
@@ -34,7 +47,7 @@ const Nav = () => {
           height={800}
           className="w-10 h-10"
         />
-        <p className="font-bold text-xl text-gray-700 max-md:hidden">
+        <p className="font-bold text-3xl text-white max-md:hidden">
           TipHive
         </p>
       </Link>
@@ -44,20 +57,60 @@ const Nav = () => {
           <Link
             key={i}
             href={item.url}
-            className="text-lg hover:text-blue-600 hover:cursor-pointer transition-colors duration-300"
+            className="text-lg text-white hover:text-green-200 font-semibold transition-all duration-300"
           >
             {item.label}
           </Link>
         ))}
-
       </div>
+      {!session?.user ? (
         <Link
           href={"/auth/signin"}
-          className="flex items-center gap-1 text-lg lg:border px-3 py-1 hover:text-blue-600 hover:cursor-pointer hover:border-blue-600 transition-colors duration-300 ml-8 max-lg:ml-auto z-50"
+          className="flex items-center gap-1 text-lg lg:border px-3 py-1 bg-white font-semibold text-green-700 rounded-full hover:bg-green-100 transition-colors duration-300 ml-8 max-lg:ml-auto z-50"
         >
           <FiUser />
           <p className="max-lg:hidden">Sign In</p>
         </Link>
+      ) : (
+        
+          <div className="ml-auto z-50">
+            <button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <img
+                src={session?.user?.image}
+                alt={session?.user?.name.slice(0, 1).toUpperCase()}
+                className="w-10 h-10 rounded-full ml-8 max-lg:ml-auto z-50"
+              />
+            </button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              slotProps={{
+                list: {
+                  "aria-labelledby": "basic-button",
+                },
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <Link href={"/profile"}>My Profile</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link href={"/add-tip"}>Add Tip</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <button onClick={() => signOut()}>Sign Out</button>
+              </MenuItem>
+            </Menu>
+          </div>
+        
+      )}
 
       {/* mobile and tab view */}
       {navOpen ? (
@@ -66,7 +119,8 @@ const Nav = () => {
             <Link
               key={i}
               href={item.url}
-              className="text-lg hover:text-blue-600 hover:cursor-pointer transition-colors duration-300"
+              onClick={()=> setNavOpen(false)}
+              className="text-lg hover:text-blue-600 transition-colors duration-300"
             >
               {item.label}
             </Link>
@@ -74,7 +128,7 @@ const Nav = () => {
         </div>
       ) : null}
 
-      <div className="lg:hidden z-50 mt-1">
+      <div className="lg:hidden z-50 mt-1 max-lg:ml-2">
         <button onClick={handleOpen} className="text-2xl">
           {navOpen ? <IoMdClose /> : <IoMdMenu />}
         </button>

@@ -18,12 +18,12 @@ export default function Home() {
   ];
   return (
     <main className="min-h-dvh mx-auto px-4 py-8 md:py-12 ">
-      <section className=" bg-blue-700 text-white rounded-xl p-8 md:p-12 mb-12 shadow-lg flex items-center justify-between flex-col md:flex-row">
+      <section className=" bg-green-700 text-white rounded-xl p-8 md:p-12 mb-12 shadow-lg flex items-center justify-between flex-col md:flex-row">
         <div className=" md:w-2/3 text-center md:text-left mb-6 md:mb-0">
           <h1 className="text-4xl md:text-5xl font-extrabold  mb-4">Unlock Smarter Living with TipHive!</h1>
           <p className="text-lg md:text-xl opacity-90 mb-6"><span className="md:text-2xl text-white font-bold">TipHive </span> let users discover and connect with other contributors, making the platform more engaging and community-driven, 
             discover and share ingenious quick tips and life hacks that simplify your daily routine.</p>
-          <Link href={"/category"} className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold text-base md:text-xl hover:bg-white/90 transition-all ">
+          <Link href={"/category"} className="bg-white text-green-600 px-6 py-2 rounded-full font-bold text-base md:text-xl hover:bg-white/90 transition-all ">
           Explore Tips
           </Link>
         </div>

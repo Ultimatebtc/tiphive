@@ -1,49 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaFacebook } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   const footerItems = [
     { url: "#", label: "About Us" },
-    { url: "#", label: "Chat with Us" },
+    { url: "#", label: "Contact" },
     { url: "#", label: "Privacy Policy" },
     { url: "#", label: "Terms of Use" },
   ];
   return (
-    <main className="px-5 py-2 bg-gray-100 border-t border-gray-300 flex max-lg:flex-col max-lg:gap-3 items-center justify-between">
-      <Link href={"/"} className="flex items-center gap-1 z-50">
-        <Image
-          src={"/logo.png"}
-          alt="logo"
-          width={800}
-          height={800}
-          className="w-10 h-10"
-        />
-        <p className="font-bold text-xl text-black max-md:hidden">TipHive</p>
-      </Link>
+    <main className="bg-gray-800 text-white py-8 px-6 md:px-10 rounded-t-lg mt-12">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+        <div className="mb-4 md:mb-0">
+        <p className="font-semibold">&copy; 2025 TipHive. All rights reserved.</p>
+        <p className="text-sm text-gray-400">Your daily dose of smart living.</p>
+        </div>
 
-      <div className="flex max-lg:flex-col items-center gap-3 text-sm">
+      <div className="flex flex-wrap justify-center md:justify-end space-x-6">
         {footerItems.map((item, i) => (
           <Link
             key={i}
             href={item.url}
-            className="hover:underline transition-all text-gray-700 hover:text-black"
+            className="hover:underline text-gray-300 hover:text-white transition-all duration-300"
           >
             {item.label}
           </Link>
         ))}
       </div>
+    </div>
 
-      <div className="flex items-center gap-3 text-xl text-gray-700">
-        <FaFacebook className="hover:text-black hover:cursor-pointer transition-all" />
-        <FaXTwitter className="hover:text-black hover:cursor-pointer transition-all"/>
-        <FaInstagram className="hover:text-black hover:cursor-pointer transition-all"/>
-        <FaYoutube className="hover:text-black hover:cursor-pointer transition-all"/>
-      </div>
     </main>
   );
 };
